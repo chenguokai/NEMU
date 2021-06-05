@@ -5,6 +5,7 @@
 #include <memory/vaddr.h>
 
 /* RTL basic instructions */
+extern FILE *fp;
 
 #define make_rtl_compute_reg(name) \
   static inline make_rtl(name, rtlreg_t* dest, const rtlreg_t* src1, const rtlreg_t* src2) { \
@@ -160,5 +161,6 @@ static inline make_rtl(jrelop, uint32_t relop,
   s->is_control = true;
   nemu_bool is_jmp = interpret_relop(relop, *src1, *src2);
   if (is_jmp) rtl_j(s, target);
+  fprintf(fp,"%lx,%d,1\n",cpu.pc,is_jmp);
 }
 #endif

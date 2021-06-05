@@ -21,6 +21,7 @@ CPU_state cpu;
 NEMUState nemu_state = {.state = NEMU_STOP};
 uint64_t g_nr_guest_instr = 0;
 extern const rtlreg_t rzero = 0;
+FILE *fp;
 
 void asm_print(vaddr_t ori_pc, int instr_len, nemu_bool print_flag);
 
@@ -58,6 +59,8 @@ void cpu_exec(uint64_t n) {
       return;
     default: nemu_state.state = NEMU_RUNNING;
   }
+
+  fp = fopen("/home/jy/Project/branch-trace.csv","w+");
 
   for (; n > 0; n --) {
     __attribute__((unused)) vaddr_t ori_pc = cpu.pc;

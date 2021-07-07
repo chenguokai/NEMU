@@ -214,7 +214,7 @@ static inline void exec(DecodeExecState *s) {
     cpu.inst_payload = s->isa.instr.val;
   }
 
-  printf("cpu.pc:%lx, s->seq_pc:%lx, s->isa.instr.val:%lx\n",cpu.pc, s->seq_pc,s->isa.instr.val);
+  // printf("cpu.pc:%lx, s->seq_pc:%lx, s->isa.instr.val:%lx\n",cpu.pc, s->seq_pc,s->isa.instr.val);
 
   return_on_mem_ex();
 

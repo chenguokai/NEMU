@@ -59,8 +59,9 @@ void cpu_exec(uint64_t n) {
       return;
     default: nemu_state.state = NEMU_RUNNING;
   }
-
-  fp = fopen("/home/jy/Project/branch-trace.csv","w+");
+  char branch_trace_path[256];
+  sprintf(branch_trace_path, "%s/%s/%s/branch-trace.csv", stats_base_dir, config_name, workload_name);
+  fp = fopen(branch_trace_path,"w+");
 
   for (; n > 0; n --) {
     __attribute__((unused)) vaddr_t ori_pc = cpu.pc;

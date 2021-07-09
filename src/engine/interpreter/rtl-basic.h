@@ -161,6 +161,6 @@ static inline make_rtl(jrelop, uint32_t relop,
   s->is_control = true;
   nemu_bool is_jmp = interpret_relop(relop, *src1, *src2);
   if (is_jmp) rtl_j(s, target);
-  fprintf(fp,"%lx,%d,1\n",cpu.pc,is_jmp);
+  fprintf(fp,"%llx %d %llx %d\n", cpu.pc, 0, is_jmp ? target : s->seq_pc, is_jmp);
 }
 #endif

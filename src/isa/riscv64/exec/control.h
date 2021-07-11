@@ -5,14 +5,18 @@ extern FILE *fp;
 static inline make_EHelper(jal) {
   rtl_li(s, ddest, s->seq_pc);
   rtl_j(s, s->jmp_pc);
-  fprintf(fp, "%llx %d %llx 1\n", cpu.pc, 1, s->jmp_pc);
+  int jal_type = 1;
+  if (id_dest->reg == 0) {
+    jal_type = 2;
+  }
+  fprintf(fp, "%llx %d %llx 1\n", cpu.pc, jal_type, s->jmp_pc);
   print_asm_template2(jal);
 }
 
 static inline make_EHelper(jalr) {
-  int jalr_type = 3; // Call by default
+  int jalr_type = 4; // Call by default
   if (id_src1->reg == 1 && id_src2->imm == 0 && id_dest->reg == 0) {
-    jalr_type = 2; // Ret
+    jalr_type = 3; // Ret
   }
   fprintf(fp, "%llx %d %llx 1\n", cpu.pc, jalr_type, *s0);
   rtl_addi(s, s0, dsrc1, id_src2->imm);

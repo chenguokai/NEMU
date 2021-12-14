@@ -60,7 +60,7 @@ void cpu_exec(uint64_t n) {
     default: nemu_state.state = NEMU_RUNNING;
   }
   char branch_trace_path[256];
-  sprintf(branch_trace_path, "%s/%s/%s/branch-trace.csv", stats_base_dir, config_name, workload_name);
+  sprintf(branch_trace_path, "./branch-trace.csv");
   fp = fopen(branch_trace_path,"w+");
 
   for (; n > 0; n --) {

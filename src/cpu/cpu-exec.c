@@ -284,6 +284,11 @@ static const void* g_exec_table[TOTAL_INSTR] = {
   MAP(INSTR_LIST, FILL_EXEC_TABLE)
 };
 
+uint64_t br_count = 0;
+#define BRLOGSIZE 0x100000
+struct br_info br_log[BRLOGSIZE];
+
+
 static int execute(int n) {
   static Decode s;
   prev_s = &s;
@@ -298,6 +303,14 @@ static int execute(int n) {
 #endif
     s.EHelper(&s);
     g_nr_guest_instr ++;
+    if (g_nr_guest_instr == 10000) {
+       // print out to file
+       FILE *f = fopen("/nfs/home/chenguokai/NEMU_ahead/xiangshan.txt", "w");
+       for (int i = 0; i < 2000; i++) {
+         fprintf(f, "%010lx %d %d %010lx\n", br_log[i].pc, br_log[i].taken, br_log[i].type, br_log[i].target);
+       }
+       fclose(f);
+     }
     IFDEF(CONFIG_DEBUG, debug_hook(s.pc, s.logbuf));
     IFDEF(CONFIG_DIFFTEST, difftest_step(s.pc, cpu.pc));
     if (nemu_state.state == NEMU_STOP) {

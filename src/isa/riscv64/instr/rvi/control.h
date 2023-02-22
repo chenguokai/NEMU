@@ -16,6 +16,11 @@
 
 def_EHelper(jal) {
   rtl_li(s, ddest, id_src2->imm);
+  br_log[br_count].pc = s->pc; // cpu.pc - 4;
+  br_log[br_count].target = id_src1->imm;
+  br_log[br_count].taken = 1;
+  br_log[br_count].type = 1;
+  br_count++;
   rtl_j(s, id_src1->imm);
 }
 
